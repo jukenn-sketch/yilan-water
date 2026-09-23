@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六大水系互動地圖與資源檢索 - 蘭陽萬頃 圳水長流</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #interactive-map { height: 520px; width: 100%; z-index: 10; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans p-6">
+
+    <div class="max-w-7xl mx-auto space-y-12">
+
+        <!-- 模組一：六大水系與水利設施 GIS 互動地圖 -->
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-sky-900">宜蘭六大水系與水利設施 GIS 導覽</h2>
+                    <p class="text-slate-650 text-sm">勾選或切換右側圖層，可檢視蘭陽溪、宜蘭河、安農溪等水系佈局與重點水利設施。</p>
+                </div>
+                <!-- 圖層切換控制按鈕組 -->
+                <div class="mt-4 md:mt-0 flex flex-wrap gap-2" id="river-controls">
+                    <button onclick="toggleRiver('all')" class="px-3 py-1.5 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900">顯示全部水系</button>
+                    <button onclick="toggleRiver('lanyang')" class="px-3 py-1.5 bg-sky-100 text-sky-800 text-xs font-semibold rounded-lg hover:bg-sky-200 border border-sky-300">蘭陽溪水系</button>
+                    <button onclick="toggleRiver('yilan')" class="px-3 py-1.5 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-lg hover:bg-emerald-200 border border-emerald-300">宜蘭河水系[cite: 1]</button>
+                    <button onclick="toggleRiver('annong')" class="px-3 py-1.5 bg-amber-100 text-amber-800 text-xs font-semibold rounded-lg hover:bg-amber-200 border border-amber-300">安農溪水系[cite: 1]</button>
+                </div>
+            </div>
+
+            <!-- 地圖容器與詳細卡片區 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- 地圖 -->
+                <div class="lg:col-span-2 rounded-xl overflow-hidden border border-slate-300">
+                    <div id="interactive-map"></div>
+                </div>
+
+                <!-- 點選景點/設施詳情卡片 (POI Info Panel) -->
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex flex-col justify-between" id="poi-card">
+                    <div>
+                        <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">水利設施 / 觀光景點[cite: 1]</span>
+                        <h3 class="text-2xl font-bold text-sky-900 mt-1 mb-3" id="poi-title">請點擊地圖上的地標標籤</h3>
+                        <p class="text-slate-650 text-sm leading-relaxed mb-4" id="poi-desc">
+                            點選地圖上的藍色或綠色地標，即可在此檢視該水利設施（如分洪堰、雷公埤、柯林湧泉）的歷史背景、灌溉功能與周邊導覽資訊[cite: 1]。
+                        </p>
+                    </div>
+                    <div class="border-t border-slate-200 pt-4" id="poi-meta">
+                        <span class="text-xs text-slate-500">提示：點擊右上方按鈕可快速切換不同水系視角[cite: 1]。</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 模組二：全站關鍵字檢索與業務 / 教育資源下載區 -->
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold text-sky-900 mb-2">資源下載與全文檢索</h2>
+            <p class="text-slate-650 text-sm mb-6">輸入圳名、工作站或法規關鍵字，快速搜尋全站專題內容與下載 PDF 參考文件[cite: 1]。</p>
+
+            <!-- 搜尋列 -->
+            <div class="relative max-w-xl mb-8">
+                <input type="text" id="search-input" onkeyup="searchResources()" placeholder="搜尋關鍵字（例如：金同春圳、分洪堰、宜蘭工作站、法規）..." 
+                       class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-sky-500 text-sm">
+                <svg class="w-5 h-5 text-slate-400 absolute left-3 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+
+            <!-- 下載資源列表 -->
+            <div class="space-y-4" id="resource-list">
+                <div class="resource-item p-4 rounded-xl border border-slate-200 flex items-center justify-between hover:bg-sky-50 transition" data-keywords="專題 報告 蘭陽萬頃 歷史 沿革">
+                    <div>
+                        <h4 class="font-bold text-sky-900">《蘭陽萬頃 圳水長流》全書數位專題報告 (PDF)[cite: 1]</h4>
+                        <p class="text-xs text-slate-500 mt-1">完整收錄宜蘭水利歷史、六大水系圖解與 10 大工作站簡介[cite: 1]。</p>
+                    </div>
+                    <a href="#" class="px-4 py-2 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900">下載 PDF[cite: 1]</a>
+                </div>
+
+                <div class="resource-item p-4 rounded-xl border border-slate-200 flex items-center justify-between hover:bg-sky-50 transition" data-keywords="金同春圳 抵美簡圳 清代 古圳 地圖">
+                    <div>
+                        <h4 class="font-bold text-sky-900">宜蘭開蘭古圳歷史分布圖與導覽手冊[cite: 1]</h4>
+                        <p class="text-xs text-slate-500 mt-1">清領與日治時期埤圳調查古圖對照資料集[cite: 1]。</p>
+                    </div>
+                    <a href="#" class="px-4 py-2 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900">下載圖資[cite: 1]</a>
+                </div>
+
+                <div class="resource-item p-4 rounded-xl border border-slate-200 flex items-center justify-between hover:bg-sky-50 transition" data-keywords="10大工作站 業務 職掌 聯絡資訊">
+                    <div>
+                        <h4 class="font-bold text-sky-900">農田水利署宜蘭管理處 10 大工作站通訊錄與轄區對照表[cite: 1]</h4>
+                        <p class="text-xs text-slate-500 mt-1">提供內部同仁與民眾業務聯繫及服務範圍查詢工具[cite: 1]。</p>
+                    </div>
+                    <a href="#" class="px-4 py-2 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900">下載表格[cite: 1]</a>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Leaflet JS 地圖腳本與搜尋互動邏輯 -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 地圖初始化 (以宜蘭平原為中心)
+        const map = L.map('interactive-map').setView([24.72, 121.76], 11);
+
+        // 載入地圖底圖
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // 水利設施與 POI 資料
+        const poiData = [
+            { name: "安農溪分洪堰", river: "annong", lat: 24.6738, lng: 121.7335, desc: "溪南重要的水利灌溉分流工程，將水流一分為二供灌溉使用，周邊結合湧泉公園，具備深厚的生態教育與觀光價值[cite: 1]。", type: "水利分流設施" },
+            { name: "柯林湧泉", river: "annong", lat: 24.6641, lng: 121.7390, desc: "位於沖積扇扇央區，地下伏流水受阻在此自然湧出，水質清澈，為極具代表性的自然湧泉地貌[cite: 1]。", type: "自然湧泉景點" },
+            { name: "雷公埤", river: "yilan", lat: 24.7720, lng: 121.7180, desc: "員山鄉著名的湧泉湖泊，主要補給來源為地下伏流水，提供週邊廣大農田灌溉水源[cite: 1]。", type: "天然埤塘" },
+            { name: "宜蘭河進水口", river: "yilan", lat: 24.7560, lng: 121.7320, desc: "宜蘭河水系的重要引水設施，穩定調度溪北灌區的水資源[cite: 1]。", type: "進水口設施" },
+            { name: "蘭陽溪堤防與水門", river: "lanyang", lat: 24.7120, lng: 121.7850, desc: "蘭陽溪主流調控水門，兼具農業引水與區域防洪機能[cite: 1]。", type: "防洪與引水設施" }
+        ];
+
+        let markers = [];
+
+        // 在地圖上渲染標記
+        function renderMarkers(filter = 'all') {
+            // 清除現有標記
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+
+            poiData.forEach(item => {
+                if (filter === 'all' || item.river === filter) {
+                    const marker = L.marker([item.lat, item.lng]).addTo(map);
+                    marker.on('click', () => {
+                        document.getElementById('poi-title').innerText = item.name;
+                        document.getElementById('poi-desc').innerText = item.desc;
+                        document.getElementById('poi-meta').innerHTML = `<span class="inline-block bg-sky-100 text-sky-800 text-xs px-2 py-1 rounded font-semibold">${item.type}[cite: 1]</span>`;
+                    });
+                    markers.push(marker);
+                }
+            });
+        }
+
+        // 水系切換邏輯
+        function toggleRiver(riverKey) {
+            renderMarkers(riverKey);
+            if (riverKey === 'annong') map.flyTo([24.67, 121.73], 13);
+            else if (riverKey === 'yilan') map.flyTo([24.76, 121.73], 13);
+            else if (riverKey === 'lanyang') map.flyTo([24.71, 121.78], 12);
+            else map.flyTo([24.72, 121.76], 11);
+        }
+
+        // 初始化渲染標記
+        renderMarkers();
+
+        // 全文關鍵字即時搜尋邏輯
+        function searchResources() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            const items = document.querySelectorAll('.resource-item');
+
+            items.forEach(item => {
+                const keywords = item.getAttribute('data-keywords').toLowerCase();
+                const text = item.innerText.toLowerCase();
+                if (keywords.includes(query) || text.includes(query)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

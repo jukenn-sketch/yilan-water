@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10大工作站巡禮與歷史對比 - 蘭陽萬頃 圳水長流</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Before/After 滑塊自訂樣式 */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .img-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 50%;
+            overflow: hidden;
+            border-right: 3px solid #0284c7;
+        }
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: #0284c7;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: ew-resize;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            z-index: 20;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans p-6">
+
+    <div class="max-w-7xl mx-auto space-y-16">
+
+        <!-- 模組一：歷史古圖與現代設施「前後對比滑塊 (Before/After Slider)」 -->
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <h2 class="text-2xl font-bold text-sky-900 mb-2">百年前後：古圳與現代水利設施對比</h2>
+            <p class="text-slate-650 mb-6">拖動中間滑塊，觀看日治時期《宜蘭廳管內埤圳調查書》古圖與現今安農溪分洪堰水利設施之變化[cite: 1]。</p>
+            
+            <div class="slider-container relative w-full h-[400px] select-none" id="ba-slider">
+                <!-- 後圖：現代設施照片 (底圖) -->
+                <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" 
+                     alt="現代水利設施" class="absolute inset-0 w-full h-full object-cover">
+                <span class="absolute bottom-4 right-4 bg-slate-900/80 text-white px-3 py-1 text-sm rounded-md z-10">現代水利工程現況[cite: 1]</span>
+
+                <!-- 前圖：歷史古圖 (裁切圖) -->
+                <div class="img-overlay" id="overlay-img">
+                    <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&q=80" 
+                         alt="日治時期古圖" class="absolute top-0 left-0 max-w-none h-full object-cover" id="overlay-inner-img">
+                    <span class="absolute bottom-4 left-4 bg-amber-900/80 text-white px-3 py-1 text-sm rounded-md z-10">日治時期埤圳調查古圖[cite: 1]</span>
+                </div>
+
+                <!-- 滑塊控制鈕 -->
+                <div class="slider-handle" id="slider-handle">↔</div>
+            </div>
+        </section>
+
+
+        <!-- 模組二：10 大工作站巡禮 (卡片式過濾與彈出詳細視窗) -->
+        <section class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-sky-900">10 大工作站巡禮</h2>
+                    <p class="text-slate-650">深入了解溪北與溪南各工作站之轄區特色、水利設施與導覽資訊[cite: 1]。</p>
+                </div>
+                <!-- 溪北 / 溪南 切換按鈕 -->
+                <div class="mt-4 md:mt-0 inline-flex rounded-md shadow-sm" role="group">
+                    <button onclick="filterStations('all')" class="px-4 py-2 text-sm font-medium bg-sky-800 text-white rounded-l-lg hover:bg-sky-900 focus:z-10">全部 (10)</button>
+                    <button onclick="filterStations('north')" class="px-4 py-2 text-sm font-medium bg-white text-slate-700 border-t border-b border-slate-200 hover:bg-slate-50 focus:z-10">溪北分區[cite: 1]</button>
+                    <button onclick="filterStations('south')" class="px-4 py-2 text-sm font-medium bg-white text-slate-700 border-r border-t border-b border-slate-200 rounded-r-lg hover:bg-slate-50 focus:z-10">溪南分區[cite: 1]</button>
+                </div>
+            </div>
+
+            <!-- 工作站網格卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="station-grid">
+                <!-- JS 自動動態渲染卡片 -->
+            </div>
+        </section>
+
+    </div>
+
+    <!-- 前端互動邏輯 -->
+    <script>
+        // 10 大工作站完整資料結構
+        const stationsData = [
+            { id: 1, region: 'north', name: '頭城工作站', area: '頭城鎮灌區', desc: '轄內包含金面溪水系及沿海防洪潮閘門維護管理[cite: 1]。' },
+            { id: 2, region: 'north', name: '礁溪工作站', area: '礁溪鄉灌區', desc: '管理得子口溪水系與溫泉區水資調度與灌溉設施[cite: 1]。' },
+            { id: 3, region: 'north', name: '宜蘭工作站', area: '宜蘭市灌區', desc: '負責宜蘭河水系及開蘭古圳金同春圳等歷史圳路[cite: 1]。' },
+            { id: 4, region: 'north', name: '員山工作站', area: '員山鄉灌區', desc: '轄區包含雷公埤、深溝湧泉等豐富地下伏流水資源[cite: 1]。' },
+            { id: 5, region: 'north', name: '壯圍工作站', area: '壯圍鄉灌區', desc: '蘭陽溪下游低窪灌區，重點為排水防洪與水門智慧監控[cite: 1]。' },
+            { id: 6, region: 'south', name: '羅東工作站', area: '羅東鎮灌區', desc: '溪南水利心臟地帶，協調萬長春圳等重要灌溉水系[cite: 1]。' },
+            { id: 7, region: 'south', name: '三星工作站', area: '三星鄉灌區', desc: '管理安農溪水系，包含安農溪分洪堰重大分水樞紐[cite: 1]。' },
+            { id: 8, region: 'south', name: '五結工作站', area: '五結鄉灌區', desc: '包含冬山河下游灌區與清水防潮閘門維護[cite: 1]。' },
+            { id: 9, region: 'south', name: '冬山工作站', area: '冬山鄉灌區', desc: '管理柯林湧泉及冬山河上游水利渠道與灌區水務[cite: 1]。' },
+            { id: 10, region: 'south', name: '蘇澳工作站', area: '蘇澳鎮灌區', desc: '轄內包含新城溪水系與沿海山麓區域農田灌溉[cite: 1]。' }
+        ];
+
+        // 渲染工作站卡片
+        function renderStations(data) {
+            const grid = document.getElementById('station-grid');
+            grid.innerHTML = data.map(st => `
+                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 hover:border-sky-500 hover:shadow-md transition">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-xl font-bold text-sky-900">${st.name}</h3>
+                        <span class="text-xs px-2 py-1 rounded ${st.region === 'north' ? 'bg-sky-100 text-sky-800' : 'bg-emerald-100 text-emerald-800'}">
+                            ${st.region === 'north' ? '溪北分區[cite: 1]' : '溪南分區[cite: 1]'}
+                        </span>
+                    </div>
+                    <p class="text-sm font-semibold text-slate-500 mb-2">服務範圍：${st.area}</p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">${st.desc}</p>
+                    <button class="text-sky-600 font-bold text-sm hover:underline">查看詳細轄區圖 ➔</button>
+                </div>
+            `).join('');
+        }
+
+        // 分區過濾邏輯
+        function filterStations(region) {
+            if (region === 'all') {
+                renderStations(stationsData);
+            } else {
+                renderStations(stationsData.filter(st => st.region === region));
+            }
+        }
+
+        // 頁面初始化
+        renderStations(stationsData);
+
+        // Before/After 對比滑塊邏輯
+        const slider = document.getElementById('ba-slider');
+        const overlay = document.getElementById('overlay-img');
+        const handle = document.getElementById('slider-handle');
+        const innerImg = document.getElementById('overlay-inner-img');
+
+        function updateSliderWidth() {
+            innerImg.style.width = slider.offsetWidth + 'px';
+        }
+        window.addEventListener('resize', updateSliderWidth);
+        updateSliderWidth();
+
+        let isDragging = false;
+        const moveSlider = (x) => {
+            const rect = slider.getBoundingClientRect();
+            let position = x - rect.left;
+            if (position < 0) position = 0;
+            if (position > rect.width) position = rect.width;
+            
+            const percentage = (position / rect.width) * 100;
+            overlay.style.width = percentage + '%';
+            handle.style.left = percentage + '%';
+        };
+
+        handle.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            moveSlider(e.clientX);
+        });
+        
+        // 觸控支援
+        handle.addEventListener('touchstart', () => isDragging = true);
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            moveSlider(e.touches[0].clientX);
+        });
+    </script>
+</body>
+</html>
