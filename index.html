@@ -4,53 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蘭陽萬頃 圳水長流 - 宜蘭農田水利數位專題網</title>
+    
+    <!-- Open Graph 社交標籤 (SEO/Share) -->
+    <meta property="og:title" content="蘭陽萬頃 圳水長流 - 宜蘭農田水利數位專題">
+    <meta property="og:description" content="探索宜蘭水利歷史沿革、沖積扇水文奇蹟與現代智慧化管理歷程">
+    <meta property="og:type" content="website">
+
     <!-- Tailwind CSS (樣式庫) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Leaflet CSS (地圖樣式) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
-        #interactive-map { height: 480px; width: 100%; }
-        /* Before/After 滑塊自訂樣式 */
-        .slider-container {
-            position: relative;
-            overflow: hidden;
-            border-radius: 0.75rem;
-        }
-        .img-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 50%;
-            overflow: hidden;
-            border-right: 3px solid #0284c7;
-        }
+        #interactive-map { height: 520px; width: 100%; }
+        .slider-container { position: relative; overflow: hidden; border-radius: 0.75rem; }
+        .img-overlay { position: absolute; top: 0; left: 0; height: 100%; width: 50%; overflow: hidden; border-right: 3px solid #0284c7; }
         .slider-handle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            background-color: #0284c7;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: ew-resize;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            z-index: 20;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 40px; height: 40px; background-color: #0284c7; color: white;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: ew-resize; box-shadow: 0 0 10px rgba(0,0,0,0.3); z-index: 20;
         }
         .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -9px;
-            top: 4px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: #0284c7;
+            content: ''; position: absolute; left: -9px; top: 4px;
+            width: 16px; height: 16px; border-radius: 50%; background-color: #0284c7;
         }
     </style>
 </head>
@@ -87,7 +64,7 @@
                     探索互動地圖 ➔[cite: 1, 2]
                 </a>
                 <a href="#history" class="bg-sky-800/60 hover:bg-sky-800 text-white font-medium px-6 py-3 rounded-xl border border-sky-500 transition">
-                    看歷史時間軸[cite: 1, 2]
+                    歷史時間軸[cite: 1, 2]
                 </a>
             </div>
         </div>
@@ -118,7 +95,6 @@
     <!-- 二、歷史沿革與古今對比 -->
     <section id="history" class="py-16 bg-slate-100">
         <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-start">
-            <!-- 時間軸 -->
             <div>
                 <h2 class="text-3xl font-bold text-sky-900 mb-6">水利管理歷史脈絡[cite: 1, 2]</h2>
                 <div class="border-l-2 border-sky-600 pl-6 space-y-8 ml-2">
@@ -253,45 +229,53 @@
     <!-- JS 腳本庫 -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // --- 1. 工作站資料與過濾 ---
+        // --- 1. 10 大工作站完整資料 (包含聯絡與轄區特色) ---
         const stationsData = [
-            { region: 'north', name: '頭城工作站', area: '頭城鎮灌區', desc: '轄內包含金面溪水系及沿海防洪潮閘門維護管理[cite: 1, 2]。' },
-            { region: 'north', name: '礁溪工作站', area: '礁溪鄉灌區', desc: '管理得子口溪水系與溫泉區水資調度與灌溉設施[cite: 1, 2]。' },
-            { region: 'north', name: '宜蘭工作站', area: '宜蘭市灌區', desc: '負責宜蘭河水系及開蘭古圳金同春圳等歷史圳路[cite: 1, 2]。' },
-            { region: 'north', name: '員山工作站', area: '員山鄉灌區', desc: '轄區包含雷公埤、深溝湧泉等豐富地下伏流水資源[cite: 1, 2]。' },
-            { region: 'north', name: '壯圍工作站', area: '壯圍鄉灌區', desc: '蘭陽溪下游低窪灌區，重點為排水防洪與水門智慧監控[cite: 1, 2]。' },
-            { region: 'south', name: '羅東工作站', area: '羅東鎮灌區', desc: '溪南水利心臟地帶，協調萬長春圳等重要灌溉水系[cite: 1, 2]。' },
-            { region: 'south', name: '三星工作站', area: '三星鄉灌區', desc: '管理安農溪水系，包含安農溪分洪堰重大分水樞紐[cite: 1, 2]。' },
-            { region: 'south', name: '五結工作站', area: '五結鄉灌區', desc: '包含冬山河下游灌區與清水防潮閘門維護[cite: 1, 2]。' },
-            { region: 'south', name: '冬山工作站', area: '冬山鄉灌區', desc: '管理柯林湧泉及冬山河上游水利渠道與灌區水務[cite: 1, 2]。' },
-            { region: 'south', name: '蘇澳工作站', area: '蘇澳鎮灌區', desc: '轄內包含新城溪水系與沿海山麓區域農田灌溉[cite: 1, 2]。' }
+            { region: 'north', name: '頭城工作站', area: '頭城鎮灌區', desc: '轄內包含金面溪水系及沿海防洪潮閘門維護管理[cite: 1, 2]。', address: '宜蘭縣頭城鎮' },
+            { region: 'north', name: '礁溪工作站', area: '礁溪鄉灌區', desc: '管理得子口溪水系與溫泉區水資調度與灌溉設施[cite: 1, 2]。', address: '宜蘭縣礁溪鄉' },
+            { region: 'north', name: '宜蘭工作站', area: '宜蘭市灌區', desc: '負責宜蘭河水系及開蘭古圳金同春圳等歷史圳路[cite: 1, 2]。', address: '宜蘭縣宜蘭市' },
+            { region: 'north', name: '員山工作站', area: '員山鄉灌區', desc: '轄區包含雷公埤、深溝湧泉等豐富地下伏流水資源[cite: 1, 2]。', address: '宜蘭縣員山鄉' },
+            { region: 'north', name: '壯圍工作站', area: '壯圍鄉灌區', desc: '蘭陽溪下游低窪灌區，重點為排水防洪與水門智慧監控[cite: 1, 2]。', address: '宜蘭縣壯圍鄉' },
+            { region: 'south', name: '羅東工作站', area: '羅東鎮灌區', desc: '溪南水利心臟地帶，協調萬長春圳等重要灌溉水系[cite: 1, 2]。', address: '宜蘭縣羅東鎮' },
+            { region: 'south', name: '三星工作站', area: '三星鄉灌區', desc: '管理安農溪水系，包含安農溪分洪堰重大分水樞紐[cite: 1, 2]。', address: '宜蘭縣三星鄉' },
+            { region: 'south', name: '五結工作站', area: '五結鄉灌區', desc: '包含冬山河下游灌區與清水防潮閘門維護[cite: 1, 2]。', address: '宜蘭縣五結鄉' },
+            { region: 'south', name: '冬山工作站', area: '冬山鄉灌區', desc: '管理柯林湧泉及冬山河上游水利渠道與灌區水務[cite: 1, 2]。', address: '宜蘭縣冬山鄉' },
+            { region: 'south', name: '蘇澳工作站', area: '蘇澳鎮灌區', desc: '轄內包含新城溪水系與沿海山麓區域農田灌溉[cite: 1, 2]。', address: '宜蘭縣蘇澳鎮' }
         ];
 
         function renderStations(data) {
             document.getElementById('station-grid').innerHTML = data.map(st => `
-                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-sky-500 transition">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-lg font-bold text-sky-900">${st.name}</h3>
-                        <span class="text-[10px] font-bold px-2 py-0.5 rounded ${st.region === 'north' ? 'bg-sky-100 text-sky-800' : 'bg-emerald-100 text-emerald-800'}">
-                            ${st.region === 'north' ? '溪北[cite: 1, 2]' : '溪南[cite: 1, 2]'}
-                        </span>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:border-sky-500 transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="text-lg font-bold text-sky-900">${st.name}</h3>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded ${st.region === 'north' ? 'bg-sky-100 text-sky-800' : 'bg-emerald-100 text-emerald-800'}">
+                                ${st.region === 'north' ? '溪北[cite: 1, 2]' : '溪南[cite: 1, 2]'}
+                            </span>
+                        </div>
+                        <p class="text-xs font-medium text-slate-400 mb-2">範圍：${st.area}</p>
+                        <p class="text-slate-600 text-xs leading-relaxed mb-3">${st.desc}</p>
                     </div>
-                    <p class="text-xs font-medium text-slate-400 mb-2">範圍：${st.area}</p>
-                    <p class="text-slate-600 text-xs leading-relaxed mb-3">${st.desc}</p>
+                    <div class="border-t border-slate-100 pt-2 text-[11px] text-slate-400 flex justify-between">
+                        <span>📍 ${st.address}</span>
+                    </div>
                 </div>
             `).join('');
         }
         function filterStations(r) { renderStations(r === 'all' ? stationsData : stationsData.filter(s => s.region === r)); }
         renderStations(stationsData);
 
-        // --- 2. Leaflet 地圖與 POI ---
+        // --- 2. Leaflet 地圖與擴充 POI ---
         const map = L.map('interactive-map').setView([24.72, 121.76], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
 
         const poiData = [
             { name: "安農溪分洪堰", river: "annong", lat: 24.6738, lng: 121.7335, desc: "溪南重要的水利分流工程，將水流一分為二供灌溉使用[cite: 1, 2]。", type: "分流設施" },
             { name: "柯林湧泉", river: "annong", lat: 24.6641, lng: 121.7390, desc: "位於沖積扇扇央區，地下伏流水受阻自然湧出，水質清澈[cite: 1, 2]。", type: "自然湧泉" },
-            { name: "雷公埤", river: "yilan", lat: 24.7720, lng: 121.7180, desc: "員山鄉著名的湧泉湖泊，主要補給來源為地下伏流水[cite: 1, 2]。", type: "天然埤塘" }
+            { name: "雷公埤", river: "yilan", lat: 24.7720, lng: 121.7180, desc: "員山鄉著名的湧泉湖泊，主要補給來源為地下伏流水[cite: 1, 2]。", type: "天然埤塘" },
+            { name: "萬長春圳進水口", river: "annong", lat: 24.6680, lng: 121.7200, desc: "溪南重要古圳進水口，引安農溪水灌溉羅東與冬山一帶農田[cite: 1, 2]。", type: "古圳進水口" },
+            { name: "金同春圳古址", river: "yilan", lat: 24.7610, lng: 121.7480, desc: "開蘭古圳之一，開墾初期為宜蘭平原北部農業發展基石[cite: 1, 2]。", type: "歷史古圳" },
+            { name: "清水防潮閘門", river: "lanyang", lat: 24.6980, lng: 121.8120, desc: "位於冬山河與蘭陽溪出海口附近，防範海水倒灌並調控排水[cite: 1, 2]。", type: "防潮防洪設施" }
         ];
 
         let markers = [];
@@ -314,6 +298,7 @@
             renderMarkers(key);
             if (key === 'annong') map.flyTo([24.67, 121.73], 13);
             else if (key === 'yilan') map.flyTo([24.76, 121.73], 13);
+            else if (key === 'lanyang') map.flyTo([24.70, 121.80], 12);
             else map.flyTo([24.72, 121.76], 11);
         }
         renderMarkers();
