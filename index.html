@@ -29,6 +29,9 @@
             content: ''; position: absolute; left: -9px; top: 4px;
             width: 16px; height: 16px; border-radius: 50%; background-color: #0284c7;
         }
+        /* Modal 彈出視窗動畫 */
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow-x: hidden; overflow-y: hidden !important; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
@@ -43,6 +46,7 @@
                 <a href="#hydrology" class="hover:text-sky-300 transition">地理水文</a>
                 <a href="#history" class="hover:text-sky-300 transition">歷史沿革</a>
                 <a href="#map-section" class="hover:text-sky-300 transition">六大水系地圖</a>
+                <a href="#museum" class="hover:text-sky-300 transition">線上文物館</a>
                 <a href="#stations" class="hover:text-sky-300 transition">10大工作站</a>
                 <a href="#search" class="hover:text-sky-300 transition">資源下載</a>
             </div>
@@ -50,21 +54,22 @@
     </nav>
 
     <!-- 主視覺區塊 (Hero Section) -->
-    <section class="relative bg-gradient-to-b from-sky-900 via-sky-800 to-sky-700 text-white py-24 px-4 text-center">
-        <div class="max-w-4xl mx-auto">
+    <section class="relative bg-gradient-to-b from-sky-900 via-sky-800 to-sky-700 text-white py-28 px-4 text-center overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        <div class="max-w-4xl mx-auto relative z-10">
             <span class="inline-block bg-sky-800/80 border border-sky-600 text-sky-200 text-xs px-3 py-1 rounded-full mb-4">
-                農業部農田水利署宜蘭管理處 專題數位化網站[cite: 1, 2]
+                農業部農田水利署宜蘭管理處 專題數位化網站
             </span>
-            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">百年守護 ‧ 蘭陽萬頃圳水長流[cite: 1]</h1>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">百年守護 ‧ 蘭陽萬頃圳水長流</h1>
             <p class="text-lg md:text-xl text-sky-100 mb-8 max-w-2xl mx-auto font-light">
-                探索宜蘭水利歷史沿革、沖積扇水文奇蹟與現代智慧化管理歷程[cite: 1, 2]
+                探索宜蘭水利歷史沿革、沖積扇水文奇蹟與現代智慧化管理歷程
             </p>
             <div class="flex justify-center gap-4">
                 <a href="#map-section" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-lg transition">
-                    探索互動地圖 ➔[cite: 1, 2]
+                    探索互動地圖 ➔
                 </a>
                 <a href="#history" class="bg-sky-800/60 hover:bg-sky-800 text-white font-medium px-6 py-3 rounded-xl border border-sky-500 transition">
-                    歷史時間軸[cite: 1, 2]
+                    歷史時間軸
                 </a>
             </div>
         </div>
@@ -73,21 +78,21 @@
     <!-- 一、地理水文與沖積扇 -->
     <section id="hydrology" class="py-16 max-w-7xl mx-auto px-4">
         <div class="text-center mb-12">
-            <h2 class="text-3xl font-bold text-sky-900">宜蘭地理與沖積扇水文[cite: 1, 2]</h2>
-            <p class="text-slate-600 mt-2">獨特的沖積扇地形，孕育出溪北與溪南豐沛的地下伏流水與湧泉系統[cite: 1, 2]。</p>
+            <h2 class="text-3xl font-bold text-sky-900">宜蘭地理與沖積扇水文</h2>
+            <p class="text-slate-600 mt-2">獨特的沖積扇地形，孕育出溪北與溪南豐沛的地下伏流水與湧泉系統。</p>
         </div>
         <div class="grid md:grid-cols-3 gap-8">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-sky-600">
-                <h3 class="text-xl font-bold text-sky-800 mb-2">扇頂區 (水源補給)[cite: 1, 2]</h3>
-                <p class="text-slate-600 text-sm">顆粒較粗的砂礫石層，雨水與河水在此大量下滲，補給全平原地下水系[cite: 1, 2]。</p>
+                <h3 class="text-xl font-bold text-sky-800 mb-2">扇頂區 (水源補給)</h3>
+                <p class="text-slate-600 text-sm">顆粒較粗的砂礫石層，雨水與河水在此大量下滲，補給全平原地下水系。</p>
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-sky-600">
-                <h3 class="text-xl font-bold text-sky-800 mb-2">扇央區 (伏流湧出)[cite: 1, 2]</h3>
-                <p class="text-slate-600 text-sm">地層顆粒轉細，地下伏流水受阻在此大量湧出，形成柯林湧泉與雷公埤等天然埤塘[cite: 1, 2]。</p>
+                <h3 class="text-xl font-bold text-sky-800 mb-2">扇央區 (伏流湧出)</h3>
+                <p class="text-slate-600 text-sm">地層顆粒轉細，地下伏流水受阻在此大量湧出，形成柯林湧泉與雷公埤等天然埤塘。</p>
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-sky-600">
-                <h3 class="text-xl font-bold text-sky-800 mb-2">扇端區 (排水防潮)[cite: 1, 2]</h3>
-                <p class="text-slate-650 text-sm">地勢低窪且臨海，強調區域排水系統與清水防潮閘門之協同調度[cite: 1, 2]。</p>
+                <h3 class="text-xl font-bold text-sky-800 mb-2">扇端區 (排水防潮)</h3>
+                <p class="text-slate-650 text-sm">地勢低窪且臨海，強調區域排水系統與清水防潮閘門之協同調度。</p>
             </div>
         </div>
     </section>
@@ -96,39 +101,39 @@
     <section id="history" class="py-16 bg-slate-100">
         <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-2 gap-12 items-start">
             <div>
-                <h2 class="text-3xl font-bold text-sky-900 mb-6">水利管理歷史脈絡[cite: 1, 2]</h2>
+                <h2 class="text-3xl font-bold text-sky-900 mb-6">水利管理歷史脈絡</h2>
                 <div class="border-l-2 border-sky-600 pl-6 space-y-8 ml-2">
                     <div class="relative timeline-item">
-                        <span class="text-xs font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded">清領時期[cite: 1, 2]</span>
-                        <h3 class="text-lg font-bold text-slate-800 mt-1">民間開墾與開蘭古圳[cite: 1, 2]</h3>
-                        <p class="text-slate-600 text-sm mt-1">先民自籌資金闢建抵美簡圳、金同春圳等古圳，開啟蘭陽平原水利先河[cite: 1, 2]。</p>
+                        <span class="text-xs font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded">清領時期</span>
+                        <h3 class="text-lg font-bold text-slate-800 mt-1">民間開墾與開蘭古圳</h3>
+                        <p class="text-slate-600 text-sm mt-1">先民自籌資金闢建抵美簡圳、金同春圳等古圳，開啟蘭陽平原水利先河。</p>
                     </div>
                     <div class="relative timeline-item">
-                        <span class="text-xs font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded">日治時期[cite: 1, 2]</span>
-                        <h3 class="text-lg font-bold text-slate-800 mt-1">公共埤圳組合與近代化[cite: 1, 2]</h3>
-                        <p class="text-slate-600 text-sm mt-1">整合民間埤圳為公共埤圳組合，興建大型防洪設施與進水口，邁入制度化管理[cite: 1, 2]。</p>
+                        <span class="text-xs font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded">日治時期</span>
+                        <h3 class="text-lg font-bold text-slate-800 mt-1">公共埤圳組合與近代化</h3>
+                        <p class="text-slate-600 text-sm mt-1">整合民間埤圳為公共埤圳組合，興建大型防洪設施與進水口，邁入制度化管理。</p>
                     </div>
                     <div class="relative timeline-item">
-                        <span class="text-xs font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded">現代改制[cite: 1, 2]</span>
-                        <h3 class="text-lg font-bold text-slate-800 mt-1">農業部農田水利署宜蘭管理處[cite: 1, 2]</h3>
-                        <p class="text-slate-600 text-sm mt-1">改制為公務體系，推動智慧水利監控、資產活化與水利文化傳承[cite: 1, 2]。</p>
+                        <span class="text-xs font-bold text-sky-600 bg-sky-100 px-2 py-0.5 rounded">現代改制</span>
+                        <h3 class="text-lg font-bold text-slate-800 mt-1">農業部農田水利署宜蘭管理處</h3>
+                        <p class="text-slate-600 text-sm mt-1">改制為公務體系，推動智慧水利監控、資產活化與水利文化傳承。</p>
                     </div>
                 </div>
             </div>
 
             <!-- 古今對比滑塊 -->
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
-                <h3 class="text-xl font-bold text-sky-900 mb-2">古今影像對比[cite: 1, 2]</h3>
-                <p class="text-slate-500 text-xs mb-4">拖動滑塊，觀看日治時期埤圳古圖與現今水利設施現況[cite: 1, 2]。</p>
+                <h3 class="text-xl font-bold text-sky-900 mb-2">古今影像對比</h3>
+                <p class="text-slate-500 text-xs mb-4">拖動滑塊，觀看日治時期埤圳古圖與現今水利設施現況。</p>
                 <div class="slider-container relative w-full h-[320px] select-none" id="ba-slider">
                     <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" 
                          alt="現代水利設施" class="absolute inset-0 w-full h-full object-cover">
-                    <span class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-xs px-2 py-1 rounded z-10">現代水利工程現況[cite: 1, 2]</span>
+                    <span class="absolute bottom-3 right-3 bg-slate-900/80 text-white text-xs px-2 py-1 rounded z-10">現代水利工程現況</span>
 
                     <div class="img-overlay" id="overlay-img">
                         <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80" 
                              alt="日治時期古圖" class="absolute top-0 left-0 max-w-none h-full object-cover" id="overlay-inner-img">
-                        <span class="absolute bottom-3 left-3 bg-amber-900/80 text-white text-xs px-2 py-1 rounded z-10">埤圳調查古圖[cite: 1, 2]</span>
+                        <span class="absolute bottom-3 left-3 bg-amber-900/80 text-white text-xs px-2 py-1 rounded z-10">埤圳調查古圖</span>
                     </div>
                     <div class="slider-handle" id="slider-handle">↔</div>
                 </div>
@@ -140,14 +145,14 @@
     <section id="map-section" class="py-16 max-w-7xl mx-auto px-4">
         <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
             <div>
-                <h2 class="text-3xl font-bold text-sky-900">六大水系與水利設施 GIS 導覽[cite: 1, 2]</h2>
-                <p class="text-slate-650 text-sm mt-1">點擊右側按鈕切換水系，查看主要水利設施與觀光景點[cite: 1, 2]。</p>
+                <h2 class="text-3xl font-bold text-sky-900">六大水系與水利設施 GIS 導覽</h2>
+                <p class="text-slate-650 text-sm mt-1">點擊右側按鈕切換水系，查看主要水利設施與觀光景點。</p>
             </div>
             <div class="mt-4 md:mt-0 flex flex-wrap gap-2">
-                <button onclick="toggleRiver('all')" class="px-3 py-1.5 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900 transition">顯示全部[cite: 1, 2]</button>
-                <button onclick="toggleRiver('lanyang')" class="px-3 py-1.5 bg-sky-100 text-sky-800 text-xs font-semibold rounded-lg hover:bg-sky-200 border border-sky-300 transition">蘭陽溪水系[cite: 1, 2]</button>
-                <button onclick="toggleRiver('yilan')" class="px-3 py-1.5 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-lg hover:bg-emerald-200 border border-emerald-300 transition">宜蘭河水系[cite: 1, 2]</button>
-                <button onclick="toggleRiver('annong')" class="px-3 py-1.5 bg-amber-100 text-amber-800 text-xs font-semibold rounded-lg hover:bg-amber-200 border border-amber-300 transition">安農溪水系[cite: 1, 2]</button>
+                <button onclick="toggleRiver('all')" class="px-3 py-1.5 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900 transition">顯示全部</button>
+                <button onclick="toggleRiver('lanyang')" class="px-3 py-1.5 bg-sky-100 text-sky-800 text-xs font-semibold rounded-lg hover:bg-sky-200 border border-sky-300 transition">蘭陽溪水系</button>
+                <button onclick="toggleRiver('yilan')" class="px-3 py-1.5 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-lg hover:bg-emerald-200 border border-emerald-300 transition">宜蘭河水系</button>
+                <button onclick="toggleRiver('annong')" class="px-3 py-1.5 bg-amber-100 text-amber-800 text-xs font-semibold rounded-lg hover:bg-amber-200 border border-amber-300 transition">安農溪水系</button>
             </div>
         </div>
 
@@ -157,31 +162,71 @@
             </div>
             <div class="bg-white p-6 rounded-2xl border border-slate-200 flex flex-col justify-between shadow-sm">
                 <div>
-                    <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">水利設施 / 景點詳情[cite: 1, 2]</span>
-                    <h3 class="text-2xl font-bold text-sky-900 mt-1 mb-3" id="poi-title">點擊地圖上的地標[cite: 1, 2]</h3>
+                    <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">水利設施 / 景點詳情</span>
+                    <h3 class="text-2xl font-bold text-sky-900 mt-1 mb-3" id="poi-title">點擊地圖上的地標</h3>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4" id="poi-desc">
-                        點選地圖上的標籤，即可在此檢視分洪堰、雷公埤、柯林湧泉等設施的歷史背景與導覽資訊[cite: 1, 2]。
+                        點選地圖上的標籤，即可在此檢視分洪堰、雷公埤、柯林湧泉等設施的歷史背景與導覽資訊。
                     </p>
                 </div>
                 <div class="border-t border-slate-100 pt-4" id="poi-meta">
-                    <span class="text-xs text-slate-400">提示：切換上方按鈕可快速聚焦不同水系[cite: 1, 2]。</span>
+                    <span class="text-xs text-slate-400">提示：切換上方按鈕可快速聚焦不同水系。</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 四、10大工作站巡禮 -->
+    <!-- 四、古農具線上展覽館 -->
+    <section id="museum" class="py-16 bg-white border-t border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Cultural Heritage</span>
+                <h2 class="text-3xl font-bold text-sky-900 mt-1">古農具文物館 數位展廳</h2>
+                <p class="text-slate-650 text-sm mt-2">典藏先民開闢蘭陽平原水利所使用的傳統農具與水利測量器具。</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 hover:shadow-md transition">
+                    <div class="h-48 bg-slate-200 rounded-xl mb-4 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?auto=format&fit=crop&w=600&q=80" alt="龍骨水車" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-lg text-sky-900 mb-1">傳統踏車 (龍骨水車)</h3>
+                    <p class="text-xs text-slate-500 mb-3">早期水利灌溉的重要提水工具，主要依靠人力踏踩帶動木製鏈齒提水入田。</p>
+                    <button onclick="openModal('龍骨水車', '龍骨水車為清領與日治早期蘭陽平原低窪地區極為重要的灌溉工具，透過鏈齒旋轉將低處水流汲引至農田。')" class="text-xs font-bold text-sky-600 hover:underline">查看文化解說 ➔</button>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 hover:shadow-md transition">
+                    <div class="h-48 bg-slate-200 rounded-xl mb-4 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1595246140625-573b715d11dc?auto=format&fit=crop&w=600&q=80" alt="牛犁" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-lg text-sky-900 mb-1">木犁與水牛文化</h3>
+                    <p class="text-xs text-slate-500 mb-3">先民配合水牛進行田間翻土與渠道築堤，反映出早期蘭陽農耕與水利互為表里的傳統。</p>
+                    <button onclick="openModal('木犁工具', '木犁是先民鬆土開圳的重要工具，配合水牛力道開闢水路與整治灌溉田區。')" class="text-xs font-bold text-sky-600 hover:underline">查看文化解說 ➔</button>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 hover:shadow-md transition">
+                    <div class="h-48 bg-slate-200 rounded-xl mb-4 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="測量器具" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="font-bold text-lg text-sky-900 mb-1">早期水利測量羅盤與水平儀</h3>
+                    <p class="text-xs text-slate-500 mb-3">日治時期至早期水利會時期所使用之土地與水路高程測量儀器。</p>
+                    <button onclick="openModal('水利測量儀器', '這批早期儀器見證了宜蘭水利工程從傳統經驗工法邁向近代化科學測量的關鍵歷程。')" class="text-xs font-bold text-sky-600 hover:underline">查看文化解說 ➔</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 五、10大工作站巡禮 -->
     <section id="stations" class="py-16 bg-slate-100">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
                 <div>
-                    <h2 class="text-3xl font-bold text-sky-900">10 大工作站巡禮[cite: 1, 2]</h2>
-                    <p class="text-slate-600 text-sm mt-1">深入瞭解溪北與溪南各工作站之轄區特色與服務範疇[cite: 1, 2]。</p>
+                    <h2 class="text-3xl font-bold text-sky-900">10 大工作站巡禮</h2>
+                    <p class="text-slate-600 text-sm mt-1">深入瞭解溪北與溪南各工作站之轄區特色與服務範疇。</p>
                 </div>
                 <div class="mt-4 md:mt-0 inline-flex rounded-lg shadow-sm" role="group">
-                    <button onclick="filterStations('all')" class="px-4 py-2 text-xs font-bold bg-sky-800 text-white rounded-l-lg hover:bg-sky-900 transition">全部 (10)[cite: 1, 2]</button>
-                    <button onclick="filterStations('north')" class="px-4 py-2 text-xs font-bold bg-white text-slate-700 border-t border-b border-slate-200 hover:bg-slate-50 transition">溪北分區[cite: 1, 2]</button>
-                    <button onclick="filterStations('south')" class="px-4 py-2 text-xs font-bold bg-white text-slate-700 border-r border-t border-b border-slate-200 rounded-r-lg hover:bg-slate-50 transition">溪南分區[cite: 1, 2]</button>
+                    <button onclick="filterStations('all')" class="px-4 py-2 text-xs font-bold bg-sky-800 text-white rounded-l-lg hover:bg-sky-900 transition">全部 (10)</button>
+                    <button onclick="filterStations('north')" class="px-4 py-2 text-xs font-bold bg-white text-slate-700 border-t border-b border-slate-200 hover:bg-slate-50 transition">溪北分區</button>
+                    <button onclick="filterStations('south')" class="px-4 py-2 text-xs font-bold bg-white text-slate-700 border-r border-t border-b border-slate-200 rounded-r-lg hover:bg-slate-50 transition">溪南分區</button>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="station-grid">
@@ -190,11 +235,11 @@
         </div>
     </section>
 
-    <!-- 五、全文檢索與資源下載 -->
+    <!-- 六、全文檢索與資源下載 -->
     <section id="search" class="py-16 max-w-7xl mx-auto px-4">
         <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-            <h2 class="text-2xl font-bold text-sky-900 mb-2">資源下載與全文檢索[cite: 1, 2]</h2>
-            <p class="text-slate-600 text-sm mb-6">輸入關鍵字快速搜尋全站專題內容與下載 PDF 參考文件[cite: 1, 2]。</p>
+            <h2 class="text-2xl font-bold text-sky-900 mb-2">資源下載與全文檢索</h2>
+            <p class="text-slate-600 text-sm mb-6">輸入關鍵字快速搜尋全站專題內容與下載 PDF 參考文件。</p>
 
             <div class="relative max-w-xl mb-8">
                 <input type="text" id="search-input" onkeyup="searchResources()" placeholder="搜尋關鍵字（例如：古圳、分洪堰、工作站）..." 
@@ -205,42 +250,67 @@
             <div class="space-y-4" id="resource-list">
                 <div class="resource-item p-4 rounded-xl border border-slate-200 flex items-center justify-between hover:bg-sky-50 transition" data-keywords="專題 報告 蘭陽萬頃 歷史 沿革">
                     <div>
-                        <h4 class="font-bold text-sky-900 text-sm">《蘭陽萬頃 圳水長流》專題報告 (PDF)[cite: 1, 2]</h4>
-                        <p class="text-xs text-slate-500 mt-0.5">完整收錄宜蘭水利歷史沿革與水系圖解[cite: 1, 2]。</p>
+                        <h4 class="font-bold text-sky-900 text-sm">《蘭陽萬頃 圳水長流》專題報告 (PDF)</h4>
+                        <p class="text-xs text-slate-500 mt-0.5">完整收錄宜蘭水利歷史沿革與水系圖解。</p>
                     </div>
-                    <a href="#" class="px-3 py-1.5 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900 transition">下載 PDF[cite: 1, 2]</a>
+                    <a href="#" class="px-3 py-1.5 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900 transition">下載 PDF</a>
                 </div>
                 <div class="resource-item p-4 rounded-xl border border-slate-200 flex items-center justify-between hover:bg-sky-50 transition" data-keywords="金同春圳 抵美簡圳 清代 古圳 地圖">
                     <div>
-                        <h4 class="font-bold text-sky-900 text-sm">宜蘭開蘭古圳歷史分布圖與導覽手冊[cite: 1, 2]</h4>
-                        <p class="text-xs text-slate-500 mt-0.5">清領與日治時期埤圳調查古圖對照資料集[cite: 1, 2]。</p>
+                        <h4 class="font-bold text-sky-900 text-sm">宜蘭開蘭古圳歷史分布圖與導覽手冊</h4>
+                        <p class="text-xs text-slate-500 mt-0.5">清領與日治時期埤圳調查古圖對照資料集。</p>
                     </div>
-                    <a href="#" class="px-3 py-1.5 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900 transition">下載圖資[cite: 1, 2]</a>
+                    <a href="#" class="px-3 py-1.5 bg-sky-800 text-white text-xs font-semibold rounded-lg hover:bg-sky-900 transition">下載圖資</a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- 展品彈出視窗 Modal -->
+    <div id="info-modal" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-xl relative">
+            <h3 class="text-xl font-bold text-sky-900 mb-2" id="modal-title">展品名稱</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-6" id="modal-body">展品詳細說明...</p>
+            <div class="flex justify-end">
+                <button onclick="closeModal()" class="px-4 py-2 bg-sky-800 text-white text-xs font-bold rounded-lg hover:bg-sky-900">關閉</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 頁尾 -->
     <footer class="bg-sky-950 text-sky-300 py-8 text-center text-xs border-t border-sky-800">
-        <p>© 農業部農田水利署宜蘭管理處 -《蘭陽萬頃 圳水長流》數位專題網站[cite: 1, 2]</p>
+        <p>© 農業部農田水利署宜蘭管理處 -《蘭陽萬頃 圳水長流》數位專題網站</p>
     </footer>
 
     <!-- JS 腳本庫 -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // --- 1. 10 大工作站完整資料 (包含聯絡與轄區特色) ---
+        // --- Modal 彈出視窗 ---
+        function openModal(title, body) {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-body').innerText = body;
+            const modal = document.getElementById('info-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.classList.add('modal-active');
+        }
+        function closeModal() {
+            const modal = document.getElementById('info-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('modal-active');
+        }
+
+        // --- 1. 10 大工作站完整資料 ---
         const stationsData = [
-            { region: 'north', name: '頭城工作站', area: '頭城鎮灌區', desc: '轄內包含金面溪水系及沿海防洪潮閘門維護管理[cite: 1, 2]。', address: '宜蘭縣頭城鎮' },
-            { region: 'north', name: '礁溪工作站', area: '礁溪鄉灌區', desc: '管理得子口溪水系與溫泉區水資調度與灌溉設施[cite: 1, 2]。', address: '宜蘭縣礁溪鄉' },
-            { region: 'north', name: '宜蘭工作站', area: '宜蘭市灌區', desc: '負責宜蘭河水系及開蘭古圳金同春圳等歷史圳路[cite: 1, 2]。', address: '宜蘭縣宜蘭市' },
-            { region: 'north', name: '員山工作站', area: '員山鄉灌區', desc: '轄區包含雷公埤、深溝湧泉等豐富地下伏流水資源[cite: 1, 2]。', address: '宜蘭縣員山鄉' },
-            { region: 'north', name: '壯圍工作站', area: '壯圍鄉灌區', desc: '蘭陽溪下游低窪灌區，重點為排水防洪與水門智慧監控[cite: 1, 2]。', address: '宜蘭縣壯圍鄉' },
-            { region: 'south', name: '羅東工作站', area: '羅東鎮灌區', desc: '溪南水利心臟地帶，協調萬長春圳等重要灌溉水系[cite: 1, 2]。', address: '宜蘭縣羅東鎮' },
-            { region: 'south', name: '三星工作站', area: '三星鄉灌區', desc: '管理安農溪水系，包含安農溪分洪堰重大分水樞紐[cite: 1, 2]。', address: '宜蘭縣三星鄉' },
-            { region: 'south', name: '五結工作站', area: '五結鄉灌區', desc: '包含冬山河下游灌區與清水防潮閘門維護[cite: 1, 2]。', address: '宜蘭縣五結鄉' },
-            { region: 'south', name: '冬山工作站', area: '冬山鄉灌區', desc: '管理柯林湧泉及冬山河上游水利渠道與灌區水務[cite: 1, 2]。', address: '宜蘭縣冬山鄉' },
-            { region: 'south', name: '蘇澳工作站', area: '蘇澳鎮灌區', desc: '轄內包含新城溪水系與沿海山麓區域農田灌溉[cite: 1, 2]。', address: '宜蘭縣蘇澳鎮' }
+            { region: 'north', name: '頭城工作站', area: '頭城鎮灌區', desc: '轄內包含金面溪水系及沿海防洪潮閘門維護管理。', address: '宜蘭縣頭城鎮' },
+            { region: 'north', name: '礁溪工作站', area: '礁溪鄉灌區', desc: '管理得子口溪水系與溫泉區水資調度與灌溉設施。', address: '宜蘭縣礁溪鄉' },
+            { region: 'north', name: '宜蘭工作站', area: '宜蘭市灌區', desc: '負責宜蘭河水系及開蘭古圳金同春圳等歷史圳路。', address: '宜蘭縣宜蘭市' },
+            { region: 'north', name: '員山工作站', area: '員山鄉灌區', desc: '轄區包含雷公埤、深溝湧泉等豐富地下伏流水資源。', address: '宜蘭縣員山鄉' },
+            { region: 'north', name: '壯圍工作站', area: '壯圍鄉灌區', desc: '蘭陽溪下游低窪灌區，重點為排水防洪與水門智慧監控。', address: '宜蘭縣壯圍鄉' },
+            { region: 'south', name: '羅東工作站', area: '羅東鎮灌區', desc: '溪南水利心臟地帶，協調萬長春圳等重要灌溉水系。', address: '宜蘭縣羅東鎮' },
+            { region: 'south', name: '三星工作站', area: '三星鄉灌區', desc: '管理安農溪水系，包含安農溪分洪堰重大分水樞紐。', address: '宜蘭縣三星鄉' },
+            { region: 'south', name: '五結工作站', area: '五結鄉灌區', desc: '包含冬山河下游灌區與清水防潮閘門維護。', address: '宜蘭縣五結鄉' },
+            { region: 'south', name: '冬山工作站', area: '冬山鄉灌區', desc: '管理柯林湧泉及冬山河上游水利渠道與灌區水務。', address: '宜蘭縣冬山鄉' },
+            { region: 'south', name: '蘇澳工作站', area: '蘇澳鎮灌區', desc: '轄內包含新城溪水系與沿海山麓區域農田灌溉。', address: '宜蘭縣蘇澳鎮' }
         ];
 
         function renderStations(data) {
@@ -250,7 +320,7 @@
                         <div class="flex justify-between items-center mb-2">
                             <h3 class="text-lg font-bold text-sky-900">${st.name}</h3>
                             <span class="text-[10px] font-bold px-2 py-0.5 rounded ${st.region === 'north' ? 'bg-sky-100 text-sky-800' : 'bg-emerald-100 text-emerald-800'}">
-                                ${st.region === 'north' ? '溪北[cite: 1, 2]' : '溪南[cite: 1, 2]'}
+                                ${st.region === 'north' ? '溪北' : '溪南'}
                             </span>
                         </div>
                         <p class="text-xs font-medium text-slate-400 mb-2">範圍：${st.area}</p>
@@ -265,17 +335,17 @@
         function filterStations(r) { renderStations(r === 'all' ? stationsData : stationsData.filter(s => s.region === r)); }
         renderStations(stationsData);
 
-        // --- 2. Leaflet 地圖與擴充 POI ---
+        // --- 2. Leaflet 地圖與 POI ---
         const map = L.map('interactive-map').setView([24.72, 121.76], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
 
         const poiData = [
-            { name: "安農溪分洪堰", river: "annong", lat: 24.6738, lng: 121.7335, desc: "溪南重要的水利分流工程，將水流一分為二供灌溉使用[cite: 1, 2]。", type: "分流設施" },
-            { name: "柯林湧泉", river: "annong", lat: 24.6641, lng: 121.7390, desc: "位於沖積扇扇央區，地下伏流水受阻自然湧出，水質清澈[cite: 1, 2]。", type: "自然湧泉" },
-            { name: "雷公埤", river: "yilan", lat: 24.7720, lng: 121.7180, desc: "員山鄉著名的湧泉湖泊，主要補給來源為地下伏流水[cite: 1, 2]。", type: "天然埤塘" },
-            { name: "萬長春圳進水口", river: "annong", lat: 24.6680, lng: 121.7200, desc: "溪南重要古圳進水口，引安農溪水灌溉羅東與冬山一帶農田[cite: 1, 2]。", type: "古圳進水口" },
-            { name: "金同春圳古址", river: "yilan", lat: 24.7610, lng: 121.7480, desc: "開蘭古圳之一，開墾初期為宜蘭平原北部農業發展基石[cite: 1, 2]。", type: "歷史古圳" },
-            { name: "清水防潮閘門", river: "lanyang", lat: 24.6980, lng: 121.8120, desc: "位於冬山河與蘭陽溪出海口附近，防範海水倒灌並調控排水[cite: 1, 2]。", type: "防潮防洪設施" }
+            { name: "安農溪分洪堰", river: "annong", lat: 24.6738, lng: 121.7335, desc: "溪南重要的水利分流工程，將水流一分為二供灌溉使用。", type: "分流設施" },
+            { name: "柯林湧泉", river: "annong", lat: 24.6641, lng: 121.7390, desc: "位於沖積扇扇央區，地下伏流水受阻自然湧出，水質清澈。", type: "自然湧泉" },
+            { name: "雷公埤", river: "yilan", lat: 24.7720, lng: 121.7180, desc: "員山鄉著名的湧泉湖泊，主要補給來源為地下伏流水。", type: "天然埤塘" },
+            { name: "萬長春圳進水口", river: "annong", lat: 24.6680, lng: 121.7200, desc: "溪南重要古圳進水口，引安農溪水灌溉羅東與冬山一帶農田。", type: "古圳進水口" },
+            { name: "金同春圳古址", river: "yilan", lat: 24.7610, lng: 121.7480, desc: "開蘭古圳之一，開墾初期為宜蘭平原北部農業發展基石。", type: "歷史古圳" },
+            { name: "清水防潮閘門", river: "lanyang", lat: 24.6980, lng: 121.8120, desc: "位於冬山河與蘭陽溪出海口附近，防範海水倒灌並調控排水。", type: "防潮防洪設施" }
         ];
 
         let markers = [];
@@ -288,7 +358,7 @@
                     m.on('click', () => {
                         document.getElementById('poi-title').innerText = item.name;
                         document.getElementById('poi-desc').innerText = item.desc;
-                        document.getElementById('poi-meta').innerHTML = `<span class="bg-sky-100 text-sky-800 text-xs px-2 py-0.5 rounded font-semibold">${item.type}[cite: 1, 2]</span>`;
+                        document.getElementById('poi-meta').innerHTML = `<span class="bg-sky-100 text-sky-800 text-xs px-2 py-0.5 rounded font-semibold">${item.type}</span>`;
                     });
                     markers.push(m);
                 }
